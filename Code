@@ -1,0 +1,23 @@
+import re    #We import the regular expressions (re) module, which helps us search for patterns in strings, checking if a password contains digits or symbols
+
+def check_password_strength(password):
+    length_error = len(password) < 8
+    digit_error = re.search(r"\d", password) is None
+    uppercase_error = re.search(r"[A-Z]", password) is None
+    lowercase_error = re.search(r"[a-z]", password) is None
+    symbol_error = re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~"+r'"]', password) is None
+
+    errors = [length_error, digit_error, uppercase_error, lowercase_error, symbol_error]
+
+    score = 5 - sum(errors)
+
+    if score == 5:
+        return "Strong"
+    elif 3 <= score < 5:
+        return "Medium"
+    else:
+        return "Weak"
+
+# Example usage
+user_input = input("Enter a password to check strength: ")
+print("Strength:", check_password_strength(user_input))
